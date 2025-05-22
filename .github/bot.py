@@ -45,7 +45,25 @@ def translate_text(text):
         result = translator.translate(text, "Farsi")
         return result.result
     except:
-        return text  # اگر ترجمه شکست خورد، متن اصلی رو برگردونه
+        return text
+
+def fix_translation(text):
+    replacements = {
+        "Call of Duty Mobile": "کالاف موبایل",
+        "players": "بازیکن‌ها",
+        "game": "بازی",
+        "update": "آپدیت",
+        "new": "جدید",
+        "weapon": "سلاح",
+        "map": "مپ",
+        "season": "فصل",
+        "event": "رویداد",
+        "challenge": "چالش",
+        # هرچی که فکر می‌کنی مناسب‌تره اضافه کن
+    }
+    for k, v in replacements.items():
+        text = text.replace(k, v)
+    return text
 
 def main():
     last_news = get_last_news()
@@ -53,6 +71,8 @@ def main():
 
     if news and news["link"] != last_news.get("link"):
         translated_title = translate_text(news["title"])
+        translated_title = fix_translation(translated_title)
+
         message = f"🔥 {translated_title}\n\n{news['link']}\n\n💙😉👻🎮🦁☀️🎃\n@lm10vfx_codm"
 
         if news["image"]:
