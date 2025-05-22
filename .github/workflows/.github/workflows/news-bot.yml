@@ -1,0 +1,25 @@
+name: CODM News Bot
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # اجرا هر ۲ ساعت یک‌بار
+  workflow_dispatch:       # امکان اجرای دستی از داشبورد
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run bot script
+        run: python bot.py
